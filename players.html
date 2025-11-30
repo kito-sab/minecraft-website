@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレイヤー一覧 - マイクラ PVP & HIVE</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f8fafc; }
+        .hero {
+            background: url("https://placehold.jp/1920x400.png") center/cover no-repeat;
+            padding: 5rem 1rem;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+        .card:hover { transform: translateY(-5px); transition: 0.2s; }
+    </style>
+</head>
+<body>
+
+    <!-- ナビバー -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Minecraft PVP & HIVE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="nav" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">トップ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="players.html">プレイヤー一覧</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">戦績確認済みプレイヤー一覧</h1>
+            <p class="lead">クリックするとゲーマータグ・戦績・得意ゲームが表示されます</p>
+        </div>
+    </header>
+
+    <section class="py-5">
+        <div class="container">
+            <!-- 検索 -->
+            <div class="mx-auto mb-4" style="max-width:400px;">
+                <input type="text" id="nameSearch" class="form-control" placeholder="表示名で検索…">
+            </div>
+
+            <!-- プレイヤーリスト -->
+            <div class="mx-auto" style="max-width:600px;">
+                <ul id="nameList" class="list-group shadow">
+                    <!-- 表示名は自由に、data にゲーマータグと情報を埋め込む -->
+                    <li class="list-group-item user-name" data-gtag="kito1757" data-info="得意:ベッド / よく遊ぶ時間: 夜">kito</li>
+                    <li class="list-group-item user-name" data-gtag="PlannedBeast133" data-info="得意: Treasure Wars / よく遊ぶ時間: 昼">みゆう</li>
+                    <li class="list-group-item user-name" data-gtag="GACCHAdayo" data-info="得意: SkyWars / よく遊ぶ時間: 夕方">がっちゃ</li>
+                    <li class="list-group-item user-name" data-gtag="FrogManPVP" data-info="得意: PVP / よく遊ぶ時間: 土日">かえる</li>
+                    <li class="list-group-item user-name" data-gtag="tiki QWQ" data-info="得意: PVP / よく遊ぶ時間: 土日">ちくわ</li>
+                    <li class="list-group-item user-name" data-gtag="Humidduke612" data-info="得意: PVP / よく遊ぶ時間: 土日">kuro</li>
+                    <li class="list-group-item user-name" data-gtag="kawaRito" data-info="得意: PVP / よく遊ぶ時間: 土日">りとる</li>
+                    <li class="list-group-item user-name" data-gtag="Rooa5187" data-info="得意: PVP / よく遊ぶ時間: 土日">ロア</li>
+                    <li class="list-group-item user-name" data-gtag="senbei115415" data-info="得意: PVP / よく遊ぶ時間: 土日">煎餅</li>
+                    <li class="list-group-item user-name" data-gtag="giichigi1" data-info="得意: PVP / よく遊ぶ時間: 土日">ぎちぎち</li>
+                    <li class="list-group-item user-name" data-gtag="RedNumber4952" data-info="得意: PVP / よく遊ぶ時間: 土日">けーき</li>
+                    <li class="list-group-item user-name" data-gtag="geemuzuki" data-info="得意: PVP / よく遊ぶ時間: 土日">ゲーム好きだと思ってた人</li>
+                    <li class="list-group-item user-name" data-gtag="nano30914" data-info="得意: PVP / よく遊ぶ時間: 土日">なの</li>
+                    <li class="list-group-item user-name" data-gtag="show1109" data-info="得意: PVP / よく遊ぶ時間: 土日">しょう</li>
+                    <li class="list-group-item user-name" data-gtag="youtiki2399" data-info="得意: PVP / よく遊ぶ時間: 土日">そこら辺のpvp勢</li>
+                    <li class="list-group-item user-name" data-gtag="syobon1879" data-info="得意: PVP / よく遊ぶ時間: 土日">y</li>
+                    <li class="list-group-item user-name" data-gtag="Dr Nyaby" data-info="得意: PVP / よく遊ぶ時間: 土日">N</li>
+                    <li class="list-group-item user-name" data-gtag="buraparepvp" data-info="得意: PVP / よく遊ぶ時間: 土日">ブラウンパレット</li>
+                    <li class="list-group-item user-name" data-gtag="honyahonya37" data-info="得意: PVP / よく遊ぶ時間: 土日">カラスノインドウ</li>
+                    <li class="list-group-item user-name" data-gtag="N1nja6Lp" data-info="得意: PVP / よく遊ぶ時間: 土日">にんじゃ</li>
+                    <li class="list-group-item user-name" data-gtag="s1rompru" data-info="得意: PVP / よく遊ぶ時間: 土日">しろしろ</li>
+                    <li class="list-group-item user-name" data-gtag="sy0fz" data-info="得意: PVP / よく遊ぶ時間: 土日">sho</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- モーダル -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">名前</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">情報</div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// 検索機能（表示名で検索）
+document.getElementById('nameSearch').addEventListener('keyup', function() {
+    const filter = this.value.toLowerCase();
+    document.querySelectorAll('#nameList li').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filter) ? 'block' : 'none';
+    });
+});
+
+// HIVE戦績取得
+async function fetchHiveStats(username) {
+    try {
+        const res = await fetch(`https://api.playhive.com/v0/game/all/${username}`);
+        const data = await res.json();
+        return data;
+    } catch(e) {
+        return null;
+    }
+}
+
+// モーダルにゲーマータグ＋戦績＋情報を表示
+document.querySelectorAll('.user-name').forEach(item => {
+    item.addEventListener('click', async function() {
+        const modal = new bootstrap.Modal(document.getElementById("infoModal"));
+
+        const displayName = this.textContent;
+        const gamertag = this.dataset.gtag;
+        const info = this.dataset.info;
+
+        document.getElementById('modalTitle').textContent = displayName;
+        document.getElementById('modalBody').innerHTML = `<strong>ゲーマータグ:</strong> ${gamertag}<br>${info}<hr>読み込み中…`;
+
+        modal.show();
+
+        const stats = await fetchHiveStats(gamertag);
+
+        if (!stats || Object.keys(stats).length === 0) {
+            document.getElementById('modalBody').innerHTML = `<strong>ゲーマータグ:</strong> ${gamertag}<br>${info}<br><br>（戦績がありません）`;
+            return;
+        }
+
+        document.getElementById('modalBody').innerHTML = `
+            <strong>ゲーマータグ:</strong> ${gamertag}<br>
+            ${info}
+            <hr>
+            <h5>HIVE 戦績</h5>
+            <p>Treasure Wars 勝利数: ${stats['TreasureWars']?.victories ?? 0}</p>
+            <p>SkyWars Kill 数: ${stats['SkyWars']?.kills ?? 0}</p>
+            <p>総勝利数: ${Object.values(stats).reduce((a,b)=>a + (b.victories||0), 0)}</p>
+        `;
+    });
+});
+</script>
+
+</body>
+</html>
