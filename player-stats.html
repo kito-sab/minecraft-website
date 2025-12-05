@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成績を見る | Minecraft Hive Stats</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f8fafc; }
+        .hero-small { background:#222; padding:3rem 1rem; color:white; }
+        .stat-card { transition:0.2s; }
+        .stat-card:hover { transform:translateY(-3px); }
+        #loading { display:none; }
+    </style>
+</head>
+<body>
+
+<!-- ナビバー -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Minecraft PVP & HIVE</a>
+    </div>
+</nav>
+
+<header class="hero-small text-center">
+    <h1 class="fw-bold">Hive 成績を見よう！</h1>
+    <p class="lead">ゲーマータグ（プレイヤー名）を入力しよう</p>
+</header>
+
+<!-- 入力フォーム -->
+<section class="py-5">
+    <div class="container text-center" style="max-width:600px;">
+        <input type="text" id="gamertag" class="form-control mb-3" placeholder="例: Kito_YT">
+        <button onclick="searchPlayer()" class="btn btn-warning w-100">▶ 成績を表示</button>
+
+        <div id="loading" class="mt-3 text-secondary">読み込み中...</div>
+    </div>
+</section>
+
+<!-- 結果表示 -->
+<section class="pb-5">
+    <div class="container">
+        <div id="result"></div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+async function searchPlayer() {
+    const name = document.getElementById("gamertag").value.trim();
+    if (!name) return alert("名前を入力してください！");
+
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("result").innerHTML = "";
+
+    try {
+        // 無料プロキシ（公共API中継）
+        const url = `https://api.hivemc.com/v1/player/${name}`;
+        const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+
+        const res = await fetch(proxy);
+        if (!res.ok) throw new Error("取得失敗");
+
+        const data = await res.json();
+
+        // プレイヤーが存在しない
+        if (!data.status) {
+            document.getElementById("result").innerHTML =
+                `<div class="alert alert-danger">プレイヤーが見つかりません</div>`;
+            document.getElementById("loading").style.display = "none";
+            return;
+        }
+
+        showStats(data);
+    } catch (err) {
+        document.getElementById("result").innerHTML =
+            `<div class="alert alert-danger">取得エラー。時間を置いて再試行してください。</div>`;
+        console.log(err);
+    }
+
+    document.getElementById("loading").style.display = "none";
+}
+
+function showStats(data) {
+    const container = document.getElementById("result");
+
+    const general = `
+        <div class="card shadow-sm stat-card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">${data.UUID}</h3>
+                <p class="mb-0"><strong>総プレイ時間:</strong> ${data.total_time_played || 0} 分</p>
+                <p class="mb-0"><strong>最終ログイン:</strong> ${data.last_login || "不明"}</p>
+                <p class="mb-0"><strong>レベル:</strong> ${data.first_login_level || "不明"}</p>
+            </div>
+        </div>
+    `;
+
+    container.innerHTML += `<h3 class="mb-3">👑 総合成績</h3>${general}`;
+
+    // ゲームごとの表示
+    if (data.games) {
+        container.innerHTML += `<h3 class="mt-5 mb-3">🎮 ゲーム別成績</h3>`;
+        Object.keys(data.games).forEach(g => {
+            const game = data.games[g];
+            container.innerHTML += `
+                <div class="card shadow-sm stat-card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${g}</h5>
+                        <p class="mb-0"><strong>勝利数:</strong> ${game.wins || 0}</p>
+                        <p class="mb-0"><strong>キル:</strong> ${game.kills || 0}</p>
+                        <p class="mb-0"><strong>デス:</strong> ${game.deaths || 0}</p>
+                        <p class="mb-0"><strong>K/D:</strong> ${(game.kills / (game.deaths || 1)).toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+}
+</script>
+
+</body>
+</html>
